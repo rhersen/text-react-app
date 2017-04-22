@@ -1,41 +1,39 @@
-import * as stations from './stations'
-
-export function x(location) {
-    const n = wgsNorth(location)
+export function x(location, stations) {
+    const n = wgsNorth(location, stations)
 
     return n > 59.64 ? 'right' :
-        n > 59.407 ? leftRight(location, 17.84) :
-            n > 59.36 ? leftRight(location, 18) :
-                n < 59.17 ? leftRight(location, 17.84) :
-                    n < 59.27 ? leftRight(location, 18) :
+        n > 59.407 ? leftRight(location, 17.84, stations) :
+            n > 59.36 ? leftRight(location, 18, stations) :
+                n < 59.17 ? leftRight(location, 17.84, stations) :
+                    n < 59.27 ? leftRight(location, 18, stations) :
                         'center'
 }
 
-function leftRight(location, limit) {
-    return wgsEast(location) < limit ? 'left' : 'right'
+function leftRight(location, limit, stations) {
+    return wgsEast(location, stations) < limit ? 'left' : 'right'
 }
 
-export function y(location) {
-    return -north(location)
+export function y(location, stations) {
+    return -north(location, stations)
 }
 
-function north(location) {
-    return location === 'Gdv' ? between('Ngd', 'Nyh') :
-        location === 'Söc' ? between('Söd', 'Söu') :
-            location === 'Gn' ? between('Mö', 'Ssä') :
-                wgsNorth(location)
+function north(location, stations) {
+    return location === 'Gdv' ? between('Ngd', 'Nyh', stations) :
+        location === 'Söc' ? between('Söd', 'Söu', stations) :
+            location === 'Gn' ? between('Mö', 'Ssä', stations) :
+                wgsNorth(location, stations)
 }
 
-function between(loc1, loc2) {
-    return (wgsNorth(loc1) + wgsNorth(loc2)) / 2
+function between(loc1, loc2, stations) {
+    return (wgsNorth(loc1, stations) + wgsNorth(loc2, stations)) / 2
 }
 
-function wgsEast(location) {
-    const geometry = stations.get(location, 'Geometry')
+function wgsEast(location, stations) {
+    const geometry = stations && stations[location] && stations[location].Geometry
     return geometry && geometry.WGS84 && geometry.WGS84.east
 }
 
-function wgsNorth(location) {
-    const geometry = stations.get(location, 'Geometry')
+function wgsNorth(location, stations) {
+    const geometry = stations && stations[location] && stations[location].Geometry
     return geometry && geometry.WGS84 && geometry.WGS84.north
 }

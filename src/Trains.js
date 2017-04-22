@@ -5,13 +5,12 @@ import difference_in_seconds from 'date-fns/difference_in_seconds'
 import map from 'lodash.map'
 
 import * as delay from './delay'
-import * as stations from './stations'
 import current from './current'
 import * as position from './position'
 
 export default class Trains extends Component {
     render() {
-        return <div>{map(current(this.props.result.TrainAnnouncement), train => <Train train={train} key={train.actual.AdvertisedTrainIdent}/>)}</div>
+        return <div>{map(current(this.props.result.TrainAnnouncement, this.props.stations), train => <Train train={train} key={train.actual.AdvertisedTrainIdent} stations={this.props.stations}/>)}</div>
     }
 }
 
@@ -19,13 +18,13 @@ class Train extends Component {
     render() {
         const a = this.props.train.actual
         return <div key={a.AdvertisedTrainIdent}
-                    style={{color: delay.color(a), textAlign: position.x(a.LocationSignature)}}>
-            {formatLatestAnnouncement(this.props.train)}
+                    style={{color: delay.color(a), textAlign: position.x(a.LocationSignature, this.props.stations)}}>
+            {formatLatestAnnouncement(this.props.train, this.props.stations)}
         </div>
     }
 }
 
-function formatLatestAnnouncement(train) {
+function formatLatestAnnouncement(train, stations) {
     const a = train.actual
 
     if (!a) return 'Aktuell information saknas'
@@ -43,7 +42,7 @@ function formatLatestAnnouncement(train) {
     }
 
     function stationName(locationSignature) {
-        return stations.get(locationSignature, 'AdvertisedShortLocationName') || locationSignature
+        return (stations && stations[locationSignature] && stations[locationSignature].AdvertisedShortLocationName) || locationSignature
     }
 
     function relativeTime() {

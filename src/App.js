@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import format from 'date-fns/format'
+import keyby from 'lodash.keyby'
 import Trains from './Trains'
-import * as stations from './stations'
 import './App.css';
 
 class Buttons extends Component {
@@ -38,8 +38,7 @@ class App extends Component {
         const xhr = new XMLHttpRequest()
         const c = this
         xhr.onload = function () {
-            c.setState({stations: JSON.parse(this.response).RESPONSE.RESULT[0].TrainStation})
-            stations.set(JSON.parse(this.response).RESPONSE.RESULT[0].TrainStation);
+            c.setState({stations: keyby(JSON.parse(this.response).RESPONSE.RESULT[0].TrainStation, 'LocationSignature')})
         }
 
         xhr.open('GET', '/json/stations', true)
@@ -53,7 +52,7 @@ class App extends Component {
                 {this.state.result.INFO &&
                 <div>
                     <h1>{format(this.state.result.INFO.LASTMODIFIED['@datetime'], 'H:mm:ss')}</h1>
-                    <Trains result={this.state.result}/>
+                    <Trains result={this.state.result} stations={this.state.stations}/>
                 </div>
                 }
             </div>

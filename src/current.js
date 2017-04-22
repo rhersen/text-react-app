@@ -8,10 +8,10 @@ import reject from 'lodash.reject'
 
 import * as position from './position'
 
-export default function current(announcements) {
+export default function current(announcements, stations) {
     const grouped = groupby(announcements, 'AdvertisedTrainIdent')
     const object = filter(map(grouped, announcementsToObject), 'actual')
-    const sorted = sortTrains(object, direction(announcements))
+    const sorted = sortTrains(object, direction(announcements), stations)
     return reject(sorted, hasArrivedAtDestination)
 }
 
@@ -22,8 +22,8 @@ function announcementsToObject(v) {
     return {actual, next}
 }
 
-function sortTrains(object, dir) {
-    return orderby(object, [a => position.y(a.actual.LocationSignature), 'actual.ActivityType', 'actual.TimeAtLocation'], ['asc', dir ? 'asc' : 'desc', dir ? 'desc' : 'asc'])
+function sortTrains(object, dir, stations) {
+    return orderby(object, [a => position.y(a.actual.LocationSignature, stations), 'actual.ActivityType', 'actual.TimeAtLocation'], ['asc', dir ? 'asc' : 'desc', dir ? 'desc' : 'asc'])
 }
 
 function direction(announcements) {
