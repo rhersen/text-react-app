@@ -1,12 +1,15 @@
-/* eslint better/no-new: 0 */
-
 import React, {Component} from 'react';
-import difference_in_seconds from 'date-fns/difference_in_seconds'
-import map from 'lodash.map'
 
-import * as delay from './delay'
-import current from './current'
+import filter from 'lodash.filter'
+import groupby from 'lodash.groupby'
+import map from 'lodash.map'
+import maxby from 'lodash.maxby'
+import minby from 'lodash.minby'
+import orderby from 'lodash.orderby'
+import reject from 'lodash.reject'
+
 import * as position from './position'
+import Train from './Train'
 
 export default class Trains extends Component {
     render() {
@@ -14,58 +17,28 @@ export default class Trains extends Component {
     }
 }
 
-class Train extends Component {
-    render() {
-        const a = this.props.train.actual
-        return <div key={a.AdvertisedTrainIdent}
-                    style={{color: delay.color(a), textAlign: position.x(a.LocationSignature, this.props.stations)}}>
-            {formatLatestAnnouncement(this.props.train, this.props.stations)}
-        </div>
-    }
-}
+function current(announcements, stations) {
+    const grouped = groupby(announcements, 'AdvertisedTrainIdent')
+    const object = filter(map(grouped, announcementsToObject), 'actual')
+    const sorted = sortTrains(object, direction(announcements), stations)
+    return reject(sorted, hasArrivedAtDestination)
 
-function formatLatestAnnouncement(train, stations) {
-    const a = train.actual
+    function announcementsToObject(v) {
+        const actual = maxby(filter(v, 'TimeAtLocation'), a => a.TimeAtLocation + a.ActivityType)
+        const next = minby(reject(v, 'TimeAtLocation'), a => a.AdvertisedTimeAtLocation + a.ActivityType)
 
-    if (!a) return 'Aktuell information saknas'
-
-    return <span>
-        {id(a)} mot {to(a)} {activity(a)} {location(a)} {delay.precision(a)} {a.TimeAtLocation.substring(11, 16) + next(train)}
-        </span>
-
-    function to() {
-        return map(map(a.ToLocation, 'LocationName'), stationName)
+        return {actual, next}
     }
 
-    function location(a) {
-        return stationName(a.LocationSignature)
+    function sortTrains(object, dir, stations) {
+        return orderby(object, [a => position.y(a.actual.LocationSignature, stations), 'actual.ActivityType', 'actual.TimeAtLocation'], ['asc', dir ? 'asc' : 'desc', dir ? 'desc' : 'asc'])
     }
 
-    function stationName(locationSignature) {
-        return (stations && stations[locationSignature] && stations[locationSignature].AdvertisedShortLocationName) || locationSignature
+    function direction(announcements) {
+        return announcements.length && /\d\d\d[13579]/.test(announcements[0].AdvertisedTrainIdent)
     }
 
-    function relativeTime() {
-        const t = train.next.EstimatedTimeAtLocation ? train.next.EstimatedTimeAtLocation : train.next.AdvertisedTimeAtLocation
-
-        return difference_in_seconds(t, new Date())
+    function hasArrivedAtDestination(train) {
+        return train.actual.ActivityType === 'Ankomst' && map(train.actual.ToLocation, 'LocationName').join() === train.actual.LocationSignature
     }
-
-    function next() {
-        if (!train.next) return ''
-
-        return train.next.ActivityType === 'Ankomst' ?
-            ` ank ${location(train.next)}  ${relativeTime()} s` :
-            ` avg ${relativeTime()} s`
-    }
-}
-
-function id(a) {
-    return a.AdvertisedTrainIdent
-}
-
-function activity(a) {
-    return a.ActivityType === 'Ankomst' ?
-        'ank' :
-        'avg'
 }
