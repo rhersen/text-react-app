@@ -8,12 +8,13 @@ import minby from 'lodash.minby'
 import orderby from 'lodash.orderby'
 import reject from 'lodash.reject'
 
-import * as position from './position'
+import * as wgs from './wgs'
 import Train from './Train'
 
 export default class Trains extends Component {
     render() {
-        return <div>{map(current(this.props.result.TrainAnnouncement, this.props.stations), train => <Train train={train} key={train.actual.AdvertisedTrainIdent} stations={this.props.stations}/>)}</div>
+        return <div>{map(current(this.props.result.TrainAnnouncement, this.props.stations), train => <Train
+            train={train} key={train.actual.AdvertisedTrainIdent} stations={this.props.stations}/>)}</div>
     }
 }
 
@@ -31,7 +32,7 @@ function current(announcements, stations) {
     }
 
     function sortTrains(object, dir, stations) {
-        return orderby(object, [a => position.y(a.actual.LocationSignature, stations), 'actual.ActivityType', 'actual.TimeAtLocation'], ['asc', dir ? 'asc' : 'desc', dir ? 'desc' : 'asc'])
+        return orderby(object, [a => y(a.actual.LocationSignature, stations), 'actual.ActivityType', 'actual.TimeAtLocation'], ['asc', dir ? 'asc' : 'desc', dir ? 'desc' : 'asc'])
     }
 
     function direction(announcements) {
@@ -40,5 +41,20 @@ function current(announcements, stations) {
 
     function hasArrivedAtDestination(train) {
         return train.actual.ActivityType === 'Ankomst' && map(train.actual.ToLocation, 'LocationName').join() === train.actual.LocationSignature
+    }
+
+    function y(location) {
+        return -north(location)
+
+        function north(location) {
+            return location === 'Gdv' ? between('Ngd', 'Nyh') :
+                location === 'Söc' ? between('Söd', 'Söu') :
+                    location === 'Gn' ? between('Mö', 'Ssä') :
+                        wgs.north(location, stations)
+        }
+
+        function between(loc1, loc2) {
+            return (wgs.north(loc1, stations) + wgs.north(loc2, stations)) / 2
+        }
     }
 }

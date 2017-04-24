@@ -3,15 +3,30 @@ import difference_in_seconds from 'date-fns/difference_in_seconds'
 import map from 'lodash.map'
 
 import * as delay from './delay'
-import * as position from './position'
+import * as wgs from './wgs'
 
 export default class Train extends Component {
     render() {
         const a = this.props.train.actual
         return <div key={a.AdvertisedTrainIdent}
-                    style={{color: delay.color(a), textAlign: position.x(a.LocationSignature, this.props.stations)}}>
+                    style={{color: delay.color(a), textAlign: x(a.LocationSignature, this.props.stations)}}>
             {formatLatestAnnouncement(this.props.train, this.props.stations)}
         </div>
+    }
+}
+
+function x(location, stations) {
+    const n = wgs.north(location, stations)
+
+    return n > 59.64 ? 'right' :
+        n > 59.407 ? leftRight(location, 17.84) :
+            n > 59.36 ? leftRight(location, 18) :
+                n < 59.17 ? leftRight(location, 17.84) :
+                    n < 59.27 ? leftRight(location, 18) :
+                        'center'
+
+    function leftRight(location, limit) {
+        return wgs.east(location, stations) < limit ? 'left' : 'right'
     }
 }
 
@@ -21,7 +36,8 @@ function formatLatestAnnouncement(train, stations) {
     if (!a) return 'Aktuell information saknas'
 
     return <span>
-        {id(a)} mot {to(a)} {activity(a)} {location(a)} {delay.precision(a)} {a.TimeAtLocation.substring(11, 16) + next(train)}
+        {id(a)}
+        mot {to(a)} {activity(a)} {location(a)} {delay.precision(a)} {a.TimeAtLocation.substring(11, 16) + next(train)}
         </span>
 
     function to() {
