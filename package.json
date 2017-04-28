@@ -6,7 +6,8 @@
   "proxy": "http://localhost:1337/",
   "dependencies": {
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-test-utils": "^0.0.1"
   },
   "devDependencies": {
     "date-fns": "^1.28.2",

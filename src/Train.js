@@ -42,8 +42,7 @@ function formatLatestAnnouncement(train, stations) {
     if (!a) return 'Aktuell information saknas'
 
     return <span>
-        {id(a)}
-        mot {to(a)} {activity(a)} {location(a)} {precision(a)} {a.TimeAtLocation.substring(11, 16) + next(train)}
+        {id(a)} mot {to(a)} {activity(a)} {location(a)} {precision(a)} {a.TimeAtLocation.substring(11, 16) + next(train)}
         </span>
 
     function to() {

@@ -13,7 +13,7 @@ import Train from './Train'
 
 export default class Trains extends Component {
     render() {
-        return <div>{map(current(this.props.result.TrainAnnouncement, this.props.stations), train => <Train
+        return <div className="trains">{map(current(this.props.result.TrainAnnouncement, this.props.stations), train => <Train
             train={train} key={train.actual.AdvertisedTrainIdent} stations={this.props.stations}/>)}</div>
     }
 }
