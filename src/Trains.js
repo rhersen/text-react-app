@@ -9,12 +9,42 @@ import orderby from 'lodash.orderby'
 import reject from 'lodash.reject'
 
 import * as wgs from './wgs'
-import Train from './Train'
+import formatLatestAnnouncement from './formatLatestAnnouncement'
 
 export default class Trains extends Component {
     render() {
-        return <div className="trains">{map(current(this.props.result.TrainAnnouncement, this.props.stations), train => <Train
-            train={train} key={train.actual.AdvertisedTrainIdent} stations={this.props.stations}/>)}</div>
+        const trainText = (train, i) => {
+            const size = 14
+            return <text x="5" y={size + size * i} fill="white" key={train.actual.AdvertisedTrainIdent}
+                         style={{
+                             fontFamily: '"Arial Narrow",Arial,sans-serif',
+                             fontSize: size
+                         }}>{formatLatestAnnouncement(train, this.props.stations)}</text>
+        }
+        const current2 = this.props.result.INFO ? current(this.props.result.TrainAnnouncement, this.props.stations) : []
+        const grouped = groupby(current2, train => branch(train.actual.LocationSignature, this.props.stations))
+        return <svg viewBox="0 0 375 667">
+            <g transform="translate(5,5)">
+                <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
+                {map(grouped.nw, trainText)}
+            </g>
+            <g transform="translate(190,5)">
+                <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
+                {map(grouped.ne, trainText)}
+            </g>
+            <g transform="translate(98,190)">
+                <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
+                {map(grouped.c, trainText)}
+            </g>
+            <g transform="translate(5,375)">
+                <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
+                {map(grouped.sw, trainText)}
+            </g>
+            <g transform="translate(190,375)">
+                <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
+                {map(grouped.se, trainText)}
+            </g>
+        </svg>
     }
 }
 
@@ -56,5 +86,20 @@ function current(announcements, stations) {
         function between(loc1, loc2) {
             return (wgs.north(loc1, stations) + wgs.north(loc2, stations)) / 2
         }
+    }
+}
+
+function branch(location, stations) {
+    const n = wgs.north(location, stations)
+
+    if (n > 59.64) return 'ne'
+    if (n > 59.407) return 'n' + leftRight(location, 17.84)
+    if (n > 59.36) return 'n' + leftRight(location, 18)
+    if (n < 59.17) return 's' + leftRight(location, 17.84)
+    if (n < 59.27) return 's' + leftRight(location, 18)
+    return 'c'
+
+    function leftRight(location, limit) {
+        return wgs.east(location, stations) < limit ? 'w' : 'e'
     }
 }
