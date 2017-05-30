@@ -44,7 +44,7 @@ class App extends Component {
                 {/*<rect x="280" y="235" width="90" height="90" fill="green" onClick={this.getCurrent('s')}/>*/}
                 {this.state.result.INFO &&
                 <g>
-                    <text x="0" y="220"
+                    <text x="16" y="208"
                           fill="#005CFF">{format(this.state.result.INFO.LASTMODIFIED['@datetime'], 'H:mm:ss')}</text>
                     <Trains result={this.state.result} stations={this.state.stations}/>
                 </g>

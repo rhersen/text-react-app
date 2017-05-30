@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+import difference_in_minutes from 'date-fns/difference_in_minutes'
 import filter from 'lodash.filter'
 import groupby from 'lodash.groupby'
 import map from 'lodash.map'
@@ -18,7 +19,8 @@ export default class Trains extends Component {
             return <text x="5" y={size + size * i} fill="white" key={train.actual.AdvertisedTrainIdent}
                          style={{
                              fontFamily: '"Arial Narrow",Arial,sans-serif',
-                             fontSize: size
+                             fontSize: size,
+                             fill: color(train.actual)
                          }}>{formatLatestAnnouncement(train, this.props.stations)}</text>
         }
         const current2 = this.props.result.INFO ? current(this.props.result.TrainAnnouncement, this.props.stations) : []
@@ -102,4 +104,13 @@ function branch(location, stations) {
     function leftRight(location, limit) {
         return wgs.east(location, stations) < limit ? 'w' : 'e'
     }
+}
+
+function color(a) {
+    const delay = minutes(a)
+    return delay < 1 ? '#0f0' : delay < 2 ? '#fff' : delay < 4 ? '#ff0' : delay < 8 ? '#f80' : '#f00'
+}
+
+function minutes(a) {
+    return difference_in_minutes(a.TimeAtLocation, a.AdvertisedTimeAtLocation)
 }
