@@ -4,15 +4,6 @@ import keyby from 'lodash.keyby'
 import Trains from './Trains'
 import './App.css';
 
-class Buttons extends Component {
-    render() {
-        return <div>
-            <button onClick={this.props.onNorth} style={{fontSize: '24px'}}>norrut</button>
-            <button onClick={this.props.onSouth} style={{fontSize: '24px'}}>söderut</button>
-        </div>
-    }
-}
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -47,15 +38,17 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
-                <Buttons onSouth={this.getCurrent('s')} onNorth={this.getCurrent('n')}/>
+            <svg viewBox="0 0 375 560">
+                <rect x="5" y="235" width="90" height="90" fill="red" onClick={this.getCurrent('n')}/>
+                <rect x="280" y="235" width="90" height="90" fill="white" onClick={this.getCurrent('s')}/>
                 {this.state.result.INFO &&
-                <div>
-                    <h1>{format(this.state.result.INFO.LASTMODIFIED['@datetime'], 'H:mm:ss')}</h1>
+                <g>
+                    <text x="0" y="220"
+                          fill="white">{format(this.state.result.INFO.LASTMODIFIED['@datetime'], 'H:mm:ss')}</text>
                     <Trains result={this.state.result} stations={this.state.stations}/>
-                </div>
+                </g>
                 }
-            </div>
+            </svg>
         );
     }
 }

@@ -23,7 +23,7 @@ export default class Trains extends Component {
         }
         const current2 = this.props.result.INFO ? current(this.props.result.TrainAnnouncement, this.props.stations) : []
         const grouped = groupby(current2, train => branch(train.actual.LocationSignature, this.props.stations))
-        return <svg viewBox="0 0 375 667">
+        return <g>
             <g transform="translate(5,5)">
                 <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
                 {map(grouped.nw, trainText)}
@@ -44,7 +44,7 @@ export default class Trains extends Component {
                 <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
                 {map(grouped.se, trainText)}
             </g>
-        </svg>
+        </g>
     }
 }
 
