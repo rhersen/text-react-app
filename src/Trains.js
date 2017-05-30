@@ -25,23 +25,23 @@ export default class Trains extends Component {
         const grouped = groupby(current2, train => branch(train.actual.LocationSignature, this.props.stations))
         return <g>
             <g transform="translate(5,5)">
-                <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
+                <rect x="0" y="0" height="180" width="180" style={{fill: "#000"}}/>
                 {map(grouped.nw, trainText)}
             </g>
             <g transform="translate(190,5)">
-                <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
+                <rect x="0" y="0" height="180" width="180" style={{fill: "#000"}}/>
                 {map(grouped.ne, trainText)}
             </g>
             <g transform="translate(98,190)">
-                <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
+                <rect x="0" y="0" height="180" width="180" style={{fill: "#000"}}/>
                 {map(grouped.c, trainText)}
             </g>
             <g transform="translate(5,375)">
-                <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
+                <rect x="0" y="0" height="180" width="180" style={{fill: "#000"}}/>
                 {map(grouped.sw, trainText)}
             </g>
             <g transform="translate(190,375)">
-                <rect x="0" y="0" height="180" width="180" style={{stroke: "#ff0000", fill: "#0000ff"}}/>
+                <rect x="0" y="0" height="180" width="180" style={{fill: "#000"}}/>
                 {map(grouped.se, trainText)}
             </g>
         </g>
