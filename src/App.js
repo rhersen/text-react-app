@@ -45,7 +45,7 @@ class App extends Component {
                 {this.state.result.INFO &&
                 <g>
                     <text x="0" y="220"
-                          fill="white">{format(this.state.result.INFO.LASTMODIFIED['@datetime'], 'H:mm:ss')}</text>
+                          fill="#005CFF">{format(this.state.result.INFO.LASTMODIFIED['@datetime'], 'H:mm:ss')}</text>
                     <Trains result={this.state.result} stations={this.state.stations}/>
                 </g>
                 }
