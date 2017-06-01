@@ -40,8 +40,8 @@ class App extends Component {
         return (
             <svg viewBox="0 0 375 560">
                 <polygon points="50,235 95,325 5,325" stroke="#005CFF" fill="#f5f5f5" onClick={this.getCurrent('n')}/>
-                <polygon points="280,235 370,235 325,325" stroke="#005CFF" fill="#f5f5f5" onClick={this.getCurrent('s')}/>
-                {/*<rect x="280" y="235" width="90" height="90" fill="green" onClick={this.getCurrent('s')}/>*/}
+                <polygon points="280,235 370,235 325,325" stroke="#005CFF" fill="#f5f5f5"
+                         onClick={this.getCurrent('s')}/>
                 {this.state.result.INFO &&
                 <g>
                     <text x="16" y="208"
