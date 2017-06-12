@@ -16,9 +16,17 @@ class App extends Component {
     getCurrent(direction) {
         return () => {
             const xhr = new XMLHttpRequest()
+            this.setState({
+                clicked: direction,
+                loaded: undefined
+            });
             xhr.onload = () => {
                 if (xhr.status === 200) {
-                    this.setState({result: JSON.parse(xhr.response).RESPONSE.RESULT[0]});
+                    this.setState({
+                        result: JSON.parse(xhr.response).RESPONSE.RESULT[0],
+                        loaded: direction,
+                        clicked: undefined
+                    });
                 }
             }
 
@@ -38,8 +46,14 @@ class App extends Component {
     render() {
         return (
             <svg viewBox="0 0 375 560">
-                <polygon points={grid.leftTriangle()} stroke="#005CFF" fill="#f5f5f5" onClick={this.getCurrent('n')}/>
-                <polygon points={grid.rightTriangle()} stroke="#005CFF" fill="#f5f5f5" onClick={this.getCurrent('s')}/>
+                <polygon
+                    className={this.state.loaded === 'n' ? 'loaded' : this.state.clicked === 'n' ? 'clicked' : 'idle'}
+                    points={grid.leftTriangle()}
+                    stroke="#005CFF" fill="#f5f5f5" onClick={this.getCurrent('n')}/>
+                <polygon
+                    className={this.state.loaded === 's' ? 'loaded' : this.state.clicked === 's' ? 'clicked' : 'idle'}
+                    points={grid.rightTriangle()}
+                    stroke="#005CFF" fill="#f5f5f5" onClick={this.getCurrent('s')}/>
                 {this.state.result.INFO &&
                 <g>
                     <text textAnchor="middle" x="50" y="208" fill="#005CFF">
