@@ -14,12 +14,11 @@ class App extends Component {
     }
 
     getCurrent(direction) {
-        const self = this
         return () => {
             const xhr = new XMLHttpRequest()
-            xhr.onload = function () {
-                if (this.status === 200) {
-                    self.setState({result: JSON.parse(this.response).RESPONSE.RESULT[0]});
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    this.setState({result: JSON.parse(xhr.response).RESPONSE.RESULT[0]});
                 }
             }
 
@@ -30,10 +29,7 @@ class App extends Component {
 
     componentDidMount() {
         const xhr = new XMLHttpRequest()
-        const c = this
-        xhr.onload = function () {
-            c.setState({stations: keyby(JSON.parse(this.response).RESPONSE.RESULT[0].TrainStation, 'LocationSignature')})
-        }
+        xhr.onload = () => this.setState({stations: keyby(JSON.parse(xhr.response).RESPONSE.RESULT[0].TrainStation, 'LocationSignature')})
 
         xhr.open('GET', '/json/stations', true)
         xhr.send()
