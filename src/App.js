@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import format from 'date-fns/format'
 import keyby from 'lodash.keyby'
+
+import * as grid from './grid'
 import Trains from './Trains'
+
 import './App.css';
 
 class App extends Component {
@@ -39,13 +42,13 @@ class App extends Component {
     render() {
         return (
             <svg viewBox="0 0 375 560">
-                <polygon points="50,235 95,325 5,325" stroke="#005CFF" fill="#f5f5f5" onClick={this.getCurrent('n')}/>
-                <polygon points="280,235 370,235 325,325" stroke="#005CFF" fill="#f5f5f5"
-                         onClick={this.getCurrent('s')}/>
+                <polygon points={grid.leftTriangle()} stroke="#005CFF" fill="#f5f5f5" onClick={this.getCurrent('n')}/>
+                <polygon points={grid.rightTriangle()} stroke="#005CFF" fill="#f5f5f5" onClick={this.getCurrent('s')}/>
                 {this.state.result.INFO &&
                 <g>
-                    <text x="16" y="208"
-                          fill="#005CFF">{format(this.state.result.INFO.LASTMODIFIED['@datetime'], 'H:mm:ss')}</text>
+                    <text textAnchor="middle" x="50" y="208" fill="#005CFF">
+                        {format(this.state.result.INFO.LASTMODIFIED['@datetime'], 'H:mm:ss')}
+                    </text>
                     <Trains result={this.state.result} stations={this.state.stations}/>
                 </g>
                 }

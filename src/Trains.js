@@ -8,6 +8,7 @@ import minby from 'lodash.minby'
 import orderby from 'lodash.orderby'
 import reject from 'lodash.reject'
 
+import * as grid from './grid'
 import * as wgs from './wgs'
 import Branch from './Branch'
 
@@ -25,8 +26,8 @@ export default class Trains extends Component {
                     se: 'translate(190,375)',
                     c: 'translate(98,190)'
                 },
-                (transform, key) =>
-                    <Branch key={key} trains={grouped[key]} transform={transform} stations={this.props.stations}/>)}
+                (x, key) =>
+                    <Branch key={key} trains={grouped[key]} transform={grid.transform(key)} stations={this.props.stations}/>)}
         </g>
     }
 
