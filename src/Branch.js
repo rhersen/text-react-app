@@ -16,8 +16,8 @@ export default class Branch extends Component {
                              fill: color(train.actual)
                          }}>{formatLatestAnnouncement(train, this.props.stations)}</text>
         }
-        return <g transform={this.props.transform}>
-            <rect x="0" y="0" height="180" width="180" style={{fill: "#000"}}/>
+        return <g className={`pos-${this.props.position}`}>
+            <rect x="0" y="0" height="180" width="180" onClick={event => console.log(event.target)} style={{fill: "#000"}}/>
             {map(this.props.trains, trainText)}
         </g>
     }

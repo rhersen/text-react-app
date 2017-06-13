@@ -8,7 +8,6 @@ import minby from 'lodash.minby'
 import orderby from 'lodash.orderby'
 import reject from 'lodash.reject'
 
-import * as grid from './grid'
 import * as wgs from './wgs'
 import Branch from './Branch'
 
@@ -19,15 +18,8 @@ export default class Trains extends Component {
             train => this.branch(train))
 
         return <g>
-            {map({
-                    nw: 'translate(5,5)',
-                    ne: 'translate(190,5)',
-                    sw: 'translate(5,375)',
-                    se: 'translate(190,375)',
-                    c: 'translate(98,190)'
-                },
-                (x, key) =>
-                    <Branch key={key} trains={grouped[key]} transform={grid.transform(key)} stations={this.props.stations}/>)}
+            {map(['nw', 'ne', 'sw', 'se', 'c'],
+                key => <Branch key={key} trains={grouped[key]} position={key} stations={this.props.stations}/>)}
         </g>
     }
 

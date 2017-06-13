@@ -19,8 +19,12 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 polygon.clicked {
@@ -28,5 +32,25 @@ polygon.clicked {
 }
 
 polygon.loaded {
-  fill: blue
+  fill: hsl(240, 100%, 50%)
+}
+
+g.pos-nw {
+  transform: translate(5px, 5px);
+}
+
+g.pos-ne {
+  transform: translate(190px, 5px);
+}
+
+g.pos-sw {
+  transform: translate(5px, 375px);
+}
+
+g.pos-se {
+  transform: translate(190px, 375px);
+}
+
+g.pos-c {
+  transform: translate(98px, 190px);
 }
