@@ -36,21 +36,35 @@ polygon.loaded {
 }
 
 g.pos-nw {
-  transform: translate(5px, 5px);
+  transform: translate(0, 0);
 }
 
 g.pos-ne {
-  transform: translate(190px, 5px);
+  transform: translate(64px, 0);
 }
 
 g.pos-sw {
-  transform: translate(5px, 375px);
+  transform: translate(0, 128px);
 }
 
 g.pos-se {
-  transform: translate(190px, 375px);
+  transform: translate(64px, 128px);
 }
 
 g.pos-c {
-  transform: translate(98px, 190px);
+  transform: translate(32px, 64px);
+}
+
+text.timestamp {
+  fill: #005CFF;
+  font-size: 8px;
+}
+
+text.train {
+  font-family: Arial Narrow, Arial, sans-serif;
+}
+
+rect.branch {
+  fill: #000;
+  stroke: red;
 }

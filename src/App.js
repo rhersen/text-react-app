@@ -45,7 +45,7 @@ class App extends Component {
 
     render() {
         return (
-            <svg viewBox="0 0 375 560">
+            <svg viewBox="0 0 128 192">
                 <polygon
                     className={this.state.loaded === 'n' ? 'loaded' : this.state.clicked === 'n' ? 'clicked' : 'idle'}
                     points={grid.leftTriangle()}
@@ -56,7 +56,7 @@ class App extends Component {
                     stroke="#005CFF" fill="#f5f5f5" onClick={this.getCurrent('s')}/>
                 {this.state.result.INFO &&
                 <g>
-                    <text textAnchor="middle" x="50" y="208" fill="#005CFF">
+                    <text className="timestamp" textAnchor="middle" x="16" y="72">
                         {format(this.state.result.INFO.LASTMODIFIED['@datetime'], 'H:mm:ss')}
                     </text>
                     <Trains result={this.state.result} stations={this.state.stations}/>

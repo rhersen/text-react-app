@@ -8,16 +8,15 @@ import formatLatestAnnouncement from './formatLatestAnnouncement'
 export default class Branch extends Component {
     render() {
         const trainText = (train, i) => {
-            const size = 14
-            return <text x="5" y={size + size * i} fill="white" key={train.actual.AdvertisedTrainIdent}
+            const size = 4
+            return <text className="train" x="5" y={size + size * i} fill="white" key={train.actual.AdvertisedTrainIdent}
                          style={{
-                             fontFamily: '"Arial Narrow",Arial,sans-serif',
                              fontSize: size,
                              fill: color(train.actual)
                          }}>{formatLatestAnnouncement(train, this.props.stations)}</text>
         }
         return <g className={`pos-${this.props.position}`}>
-            <rect x="0" y="0" height="180" width="180" onClick={event => console.log(event.target)} style={{fill: "#000"}}/>
+            <rect className="branch" x="0" y="0" height="64" width="64"/>
             {map(this.props.trains, trainText)}
         </g>
     }
