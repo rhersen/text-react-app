@@ -27,6 +27,10 @@
   }
 }
 
+polygon {
+  stroke-width: 0.02px
+}
+
 polygon.clicked {
   fill: gray
 }
@@ -36,28 +40,28 @@ polygon.loaded {
 }
 
 g.pos-nw {
-  transform: translate(0, 0);
+  transform: translate(-2px, -3px);
 }
 
 g.pos-ne {
-  transform: translate(64px, 0);
+  transform: translate(0, -3px);
 }
 
 g.pos-sw {
-  transform: translate(0, 128px);
+  transform: translate(-2px, 1px);
 }
 
 g.pos-se {
-  transform: translate(64px, 128px);
+  transform: translate(0, 1px);
 }
 
 g.pos-c {
-  transform: translate(32px, 64px);
+  transform: translate(-1px, -1px);
 }
 
 text.timestamp {
   fill: #005CFF;
-  font-size: 8px;
+  font-size: 0.2px;
 }
 
 text.train {
@@ -67,4 +71,5 @@ text.train {
 rect.branch {
   fill: #000;
   stroke: red;
+  stroke-width: 0.02px
 }
