@@ -39,6 +39,10 @@ polygon.loaded {
   fill: hsl(240, 100%, 50%)
 }
 
+g {
+  transition: transform 0.5s;
+}
+
 g.pos-nw {
   transform: translate(-2px, -3px);
 }
@@ -57,6 +61,26 @@ g.pos-se {
 
 g.pos-c {
   transform: translate(-1px, -1px);
+}
+
+.expanded-c > .pos-nw {
+  transform: translate(-2px, -3px) scale(0.5, 0.5);
+}
+
+.expanded-c > .pos-ne {
+  transform: translate(1px, -3px) scale(0.5, 0.5);
+}
+
+.expanded-c > .pos-sw {
+  transform: translate(-2px, 2px) scale(0.5, 0.5);
+}
+
+.expanded-c > .pos-se {
+  transform: translate(1px, 2px) scale(0.5, 0.5);
+}
+
+.expanded-c > .pos-c {
+  transform: translate(-2px, -2px) scale(2, 2);
 }
 
 text.timestamp {

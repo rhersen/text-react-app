@@ -16,7 +16,7 @@ export default class Branch extends Component {
                          }}>{formatLatestAnnouncement(train, this.props.stations)}</text>
         }
         return <g className={`pos-${this.props.position}`}>
-            <rect className="branch" x="0" y="0" height="2" width="2"/>
+            <rect onClick={this.props.expand} className="branch" x="0" y="0" height="2" width="2"/>
             {map(this.props.trains, trainText)}
         </g>
     }

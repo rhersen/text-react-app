@@ -12,14 +12,20 @@ import * as wgs from './wgs'
 import Branch from './Branch'
 
 export default class Trains extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {expanded: false};
+    }
+
     render() {
         const grouped = groupby(
             this.current(this.props.result.TrainAnnouncement, this.props.stations),
             train => this.branch(train))
 
-        return <g>
+        return <g className={this.state.expanded ? 'expanded-c' : 'normal'}>
             {map(['nw', 'ne', 'sw', 'se', 'c'],
-                key => <Branch key={key} trains={grouped[key]} position={key} stations={this.props.stations}/>)}
+                key => <Branch key={key} trains={grouped[key]} position={key} stations={this.props.stations}
+                               expand={() => this.setState({expanded: !this.state.expanded})}/>)}
         </g>
     }
 
