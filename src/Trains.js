@@ -22,10 +22,10 @@ export default class Trains extends Component {
             this.current(this.props.result.TrainAnnouncement, this.props.stations),
             train => this.branch(train))
 
-        return <g className={this.state.expanded ? 'expanded-c' : 'normal'}>
+        return <g className={this.state.expanded ? `expanded-${this.state.expanded}` : 'normal'}>
             {map(['nw', 'ne', 'sw', 'se', 'c'],
                 key => <Branch key={key} trains={grouped[key]} position={key} stations={this.props.stations}
-                               expand={() => this.setState({expanded: !this.state.expanded})}/>)}
+                               expand={() => this.setState({expanded: this.state.expanded ? undefined : key})}/>)}
         </g>
     }
 

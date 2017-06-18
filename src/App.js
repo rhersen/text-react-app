@@ -45,7 +45,7 @@ class App extends Component {
 
     render() {
         return (
-            <svg viewBox="-2 -3 4 6">
+            <svg viewBox="-4 -6 8 12">
                 <polygon
                     className={this.state.loaded === 'n' ? 'loaded' : this.state.clicked === 'n' ? 'clicked' : 'idle'}
                     points={grid.leftTriangle()}

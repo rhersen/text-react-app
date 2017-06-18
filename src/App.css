@@ -44,43 +44,67 @@ g {
 }
 
 g.pos-nw {
-  transform: translate(-2px, -3px);
+  transform: translate(-4px, -6px);
 }
 
 g.pos-ne {
-  transform: translate(0, -3px);
+  transform: translate(0, -6px);
 }
 
 g.pos-sw {
-  transform: translate(-2px, 1px);
+  transform: translate(-4px, 2px);
 }
 
 g.pos-se {
-  transform: translate(0, 1px);
+  transform: translate(0, 2px);
 }
 
 g.pos-c {
-  transform: translate(-1px, -1px);
+  transform: translate(-2px, -2px);
 }
 
-.expanded-c > .pos-nw {
-  transform: translate(-2px, -3px) scale(0.5, 0.5);
+.expanded-nw > .pos-nw {
+  transform: translate(-4px, -4px) scale(2, 2);
 }
 
-.expanded-c > .pos-ne {
-  transform: translate(1px, -3px) scale(0.5, 0.5);
-}
-
-.expanded-c > .pos-sw {
-  transform: translate(-2px, 2px) scale(0.5, 0.5);
-}
-
-.expanded-c > .pos-se {
-  transform: translate(1px, 2px) scale(0.5, 0.5);
+.expanded-ne > .pos-ne {
+  transform: translate(-4px, -4px) scale(2, 2);
 }
 
 .expanded-c > .pos-c {
-  transform: translate(-2px, -2px) scale(2, 2);
+  transform: translate(-4px, -4px) scale(2, 2);
+}
+
+.expanded-sw > .pos-sw {
+  transform: translate(-4px, -4px) scale(2, 2);
+}
+
+.expanded-se > .pos-se {
+  transform: translate(-4px, -4px) scale(2, 2);
+}
+
+.expanded-ne > .pos-nw, .expanded-c > .pos-nw, .expanded-sw > .pos-nw, .expanded-se > .pos-nw {
+  transform: translate(-4px, -6px) scale(0.5, 0.5);
+}
+
+.expanded-nw > .pos-ne, .expanded-c > .pos-ne, .expanded-sw > .pos-ne, .expanded-se > .pos-ne {
+  transform: translate(2px, -6px) scale(0.5, 0.5);
+}
+
+.expanded-nw > .pos-sw, .expanded-c > .pos-sw, .expanded-ne > .pos-sw, .expanded-se > .pos-sw {
+  transform: translate(-4px, 4px) scale(0.5, 0.5);
+}
+
+.expanded-nw > .pos-se, .expanded-c > .pos-se, .expanded-ne > .pos-se, .expanded-sw > .pos-se {
+  transform: translate(2px, 4px) scale(0.5, 0.5);
+}
+
+.expanded-nw > .pos-c, .expanded-ne > .pos-c {
+  transform: translate(-1px, 4px) scale(0.5, 0.5);
+}
+
+.expanded-sw > .pos-c, .expanded-se > .pos-c {
+  transform: translate(-1px, -6px) scale(0.5, 0.5);
 }
 
 text.timestamp {

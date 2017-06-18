@@ -1,7 +1,7 @@
 export function leftTriangle() {
-    return '-1.5,-1 -1,1 -2,1'
+    return '-3,-2 -2,2 -4,2'
 }
 
 export function rightTriangle() {
-    return '1.5,1 1,-1 2,-1'
+    return '3,2 2,-2 4,-2'
 }
