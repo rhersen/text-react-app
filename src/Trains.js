@@ -24,7 +24,11 @@ export default class Trains extends Component {
 
         return <g className={this.state.expanded ? `expanded-${this.state.expanded}` : 'normal'}>
             {map(['nw', 'ne', 'sw', 'se', 'c'],
-                key => <Branch key={key} trains={grouped[key]} position={key} stations={this.props.stations}
+                key => <Branch key={key}
+                               trains={grouped[key]}
+                               position={key}
+                               stations={this.props.stations}
+                               size={this.state.expanded === key ? 'expanded' : this.state.expanded ? 'collapsed' : 'normal'}
                                expand={() => this.setState({expanded: this.state.expanded ? undefined : key})}/>)}
         </g>
     }

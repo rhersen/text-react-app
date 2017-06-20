@@ -6,15 +6,22 @@ import map from 'lodash.map'
 import formatLatestAnnouncement from './formatLatestAnnouncement'
 
 export default class Branch extends Component {
+    fontSize() {
+        return {normal: 0.3, expanded: 0.15, collapsed: 0.6}[this.props.size]
+    }
+
     render() {
         const trainText = train => {
-            return <tspan x="0.05" dy="0.3" fill={color(train.actual)} key={train.actual.AdvertisedTrainIdent}>
+            return <tspan x="0.05"
+                          dy={this.fontSize()}
+                          fill={color(train.actual)}
+                          key={train.actual.AdvertisedTrainIdent}>
                 {formatLatestAnnouncement(train, this.props.stations)}
             </tspan>
         }
         return <g className={`pos-${this.props.position}`}>
             <rect onClick={this.props.expand} className="branch" x="0" y="0" height="4" width="4"/>
-            <text className="train">
+            <text className="train" style={{fontSize: this.fontSize()}}>
                 {map(this.props.trains, trainText)}
             </text>
         </g>
