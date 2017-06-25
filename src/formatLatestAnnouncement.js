@@ -2,19 +2,23 @@ import map from 'lodash.map'
 
 import difference_in_minutes from 'date-fns/difference_in_minutes'
 
-export default function formatLatestAnnouncement(train, stations) {
+export function line1(train, stations) {
     const a = train.actual
 
     if (!a) return 'Aktuell information saknas'
 
-    return id(a) + ' ' + map(a.ToLocation, 'LocationName') + ' ' + activity(a) + ' ' + location(a) + ' ' + precision(a)
+    return `Tåg ${id(a)} mot ${map(map(a.ToLocation, 'LocationName'), loc => stationName(loc, stations))} ${precision(a)}`
+}
+
+export function line2(train, stations) {
+    const a = train.actual
+
+    if (!a) return 'line2'
+
+    return `${activity(a)} ${location(a)} kl ${a.TimeAtLocation.substring(11, 16)}`
 
     function location(a) {
-        return stationName(a.LocationSignature)
-    }
-
-    function stationName(locationSignature) {
-        return (stations && stations[locationSignature] && stations[locationSignature].AdvertisedShortLocationName) || locationSignature
+        return stationName(a.LocationSignature, stations)
     }
 }
 
@@ -22,22 +26,20 @@ function id(a) {
     return a.AdvertisedTrainIdent
 }
 
-function activity(a) {
-    return a.ActivityType === 'Ankomst' ?
-        'ank' :
-        'avg'
+function stationName(locationSignature, stations) {
+    return (stations && stations[locationSignature] && stations[locationSignature].AdvertisedShortLocationName) || locationSignature
 }
 
 function precision(a) {
-    const delay = minutes(a)
+    const delay = difference_in_minutes(a.TimeAtLocation, a.AdvertisedTimeAtLocation)
 
-    return delay === 1 ? '' :
-        delay > 0 ? `${delay} min
-                           sent` : delay < -1 ? 'i god tid' :
-            ''
+    return delay === 1 ? 'nästan i tid' :
+        delay > 0 ? `${delay} minuter försenat` :
+            delay < -1 ? 'i god tid' :
+                'i tid'
 
 }
 
-function minutes(a) {
-    return difference_in_minutes(a.TimeAtLocation, a.AdvertisedTimeAtLocation)
+function activity(a) {
+    return a.ActivityType === 'Ankomst' ? 'ank' : 'avg'
 }
