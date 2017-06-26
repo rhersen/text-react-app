@@ -21,7 +21,7 @@ export default class Branch extends Component {
     render() {
         const trainText = train => {
             return [<tspan x="0.05"
-                           dy={this.fontSize()}
+                           dy={this.fontSize() * 1.5}
                            fill={color(train.actual)}
                            key={train.actual.AdvertisedTrainIdent + 1}>
                 {line1(train, this.props.stations)}

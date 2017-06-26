@@ -7,7 +7,7 @@ export function line1(train, stations) {
 
     if (!a) return 'Aktuell information saknas'
 
-    return `Tåg ${id(a)} mot ${map(map(a.ToLocation, 'LocationName'), loc => stationName(loc, stations))} ${precision(a)}`
+    return `${id(a)} mot ${map(map(a.ToLocation, 'LocationName'), loc => stationName(loc, stations))} ${precision(a)}`
 }
 
 export function line2(train, stations) {
