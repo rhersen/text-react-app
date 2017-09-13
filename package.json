@@ -11,6 +11,13 @@
   },
   "devDependencies": {
     "date-fns": "^1.28.2",
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-config-prettier": "^2.4.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-prettier": "^2.2.0",
+    "eslint-plugin-react": "^7.3.0",
     "lodash.filter": "4.x",
     "lodash.foreach": "4.x",
     "lodash.groupby": "4.x",
@@ -21,6 +28,7 @@
     "lodash.minby": "4.x",
     "lodash.orderby": "4.x",
     "lodash.reject": "4.x",
+    "prettier": "^1.6.1",
     "react-scripts": "0.9.5"
   },
   "scripts": {
