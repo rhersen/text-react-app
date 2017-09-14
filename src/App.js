@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import format from "date-fns/format";
 import keyby from "lodash.keyby";
+import filter from "lodash.filter";
 
 import * as grid from "./grid";
 import Trains from "./Trains";
@@ -36,15 +37,25 @@ class App extends Component {
       });
       xhr.onload = () => {
         if (xhr.status === 200) {
+          const southbound = /[13579]$/;
+          const northbound = /[24680]$/;
+          const result = JSON.parse(xhr.response).RESPONSE.RESULT[0];
           this.setState({
-            result: JSON.parse(xhr.response).RESPONSE.RESULT[0],
+            result: {
+              INFO: result.INFO,
+              TrainAnnouncement: filter(result.TrainAnnouncement, a =>
+                (direction === "n" ? northbound : southbound).test(
+                  a.AdvertisedTrainIdent
+                )
+              )
+            },
             loaded: direction,
             clicked: undefined
           });
         }
       };
 
-      xhr.open("GET", `/json/current?direction=${direction}`, true);
+      xhr.open("GET", `/json/current`, true);
       xhr.send();
     };
   }
