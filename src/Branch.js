@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import difference_in_minutes from "date-fns/difference_in_minutes";
-import map from "lodash.map";
+import difference_in_minutes from 'date-fns/difference_in_minutes';
+import map from 'lodash.map';
 
-import { line1, line2 } from "./formatLatestAnnouncement";
+import { line1, line2 } from './formatLatestAnnouncement';
 
 export default class Branch extends Component {
   fontSize() {
@@ -18,12 +18,24 @@ export default class Branch extends Component {
     return sizes[this.props.size];
   }
 
+  dy() {
+    const l = this.props.trains.length;
+    if (l === 1) return this.fontSize() * 6;
+    if (l === 2) return this.fontSize() * 4;
+    if (l === 3) return this.fontSize() * 2.7;
+    if (l === 4) return this.fontSize() * 2;
+    if (l === 5) return this.fontSize() * 1.5;
+    if (l === 6) return this.fontSize() * 1.15;
+    if (l === 7) return this.fontSize() * 0.85;
+    return this.fontSize() * 0.7;
+  }
+
   render() {
     const trainText = train => {
       return [
         <tspan
           x="0.05"
-          dy={this.fontSize() * 1.5}
+          dy={this.dy()}
           fill={color(train.actual)}
           key={train.actual.AdvertisedTrainIdent + 1}
         >
@@ -60,8 +72,8 @@ export default class Branch extends Component {
 function color(a) {
   const delay = minutes(a);
   return delay < 1
-    ? "#0f0"
-    : delay < 2 ? "#fff" : delay < 4 ? "#ff0" : delay < 8 ? "#f80" : "#f00";
+    ? '#0f0'
+    : delay < 2 ? '#fff' : delay < 4 ? '#ff0' : delay < 8 ? '#f80' : '#f00';
 }
 
 function minutes(a) {
