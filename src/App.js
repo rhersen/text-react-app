@@ -17,13 +17,10 @@ class App extends Component {
     const xhr = new XMLHttpRequest()
     xhr.onload = () =>
       this.setState({
-        stations: keyby(
-          JSON.parse(xhr.response).RESPONSE.RESULT[0].TrainStation,
-          'LocationSignature'
-        ),
+        stations: keyby(JSON.parse(xhr.response), 'LocationSignature'),
       })
 
-    xhr.open('GET', '/json/stations', true)
+    xhr.open('GET', '/json/pendel', true)
     xhr.send()
   }
 
