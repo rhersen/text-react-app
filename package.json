@@ -11,11 +11,10 @@
   },
   "devDependencies": {
     "date-fns": "^1.28.2",
-    "eslint": "^4.6.1",
-    "eslint-config-prettier": "^2.4.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-prettier": "^2.2.0",
-    "eslint-plugin-react": "^7.3.0",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.7.0",
     "lodash.filter": "4.x",
     "lodash.foreach": "4.x",
     "lodash.groupby": "4.x",
@@ -26,12 +25,13 @@
     "lodash.minby": "4.x",
     "lodash.orderby": "4.x",
     "lodash.reject": "4.x",
-    "prettier": "^1.6.1",
+    "prettier": "^1.12",
     "react-scripts": "0.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "rsync -avz build/ ${DEPLOY_DESTINATION}/text-react-app/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
