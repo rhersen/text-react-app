@@ -61,6 +61,6 @@ export default function currentTrains(announcement, stations) {
   }
 
   function between(loc1, loc2) {
-    return (wgs.north(loc1, stations) + wgs.north(loc2, stations)) / 2
+    return 0.5 * wgs.north(loc1, stations) + 0.5 * wgs.north(loc2, stations)
   }
 }
