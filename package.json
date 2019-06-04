@@ -25,6 +25,7 @@
     "lodash.minby": "4.x",
     "lodash.orderby": "4.x",
     "lodash.reject": "4.x",
+    "netlify-cli": "^2.11.19",
     "prettier": "^1.12",
     "react-scripts": "1.0.1"
   },
