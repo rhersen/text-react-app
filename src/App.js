@@ -20,7 +20,7 @@ class App extends Component {
         stations: keyby(JSON.parse(xhr.response), 'LocationSignature'),
       })
 
-    xhr.open('GET', '/json/pendel', true)
+    xhr.open('GET', 'http://backend.hersen.net/json/pendel', true)
     xhr.send()
   }
 
@@ -41,7 +41,11 @@ class App extends Component {
         }
       }
 
-      xhr.open('GET', `/json/current?direction=${direction}`, true)
+      xhr.open(
+        'GET',
+        `http://backend.hersen.net/json/current?direction=${direction}`,
+        true
+      )
       xhr.send()
     }
   }
