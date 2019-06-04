@@ -14,39 +14,31 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const xhr = new XMLHttpRequest()
-    xhr.onload = () =>
-      this.setState({
-        stations: keyby(JSON.parse(xhr.response), 'LocationSignature'),
-      })
-
-    xhr.open('GET', 'http://backend.hersen.net/json/pendel', true)
-    xhr.send()
+    fetch('/json/pendel')
+      .then(response => response.json())
+      .then(json =>
+        this.setState({
+          stations: keyby(json, 'LocationSignature'),
+        })
+      )
   }
 
   getCurrent(direction) {
     return () => {
-      const xhr = new XMLHttpRequest()
       this.setState({
         clicked: direction,
         loaded: undefined,
       })
-      xhr.onload = () => {
-        if (xhr.status === 200) {
+
+      fetch(`/json/current?direction=${direction}`)
+        .then(response => response.json())
+        .then(json =>
           this.setState({
-            result: JSON.parse(xhr.response).RESPONSE.RESULT[0],
+            result: json.RESPONSE.RESULT[0],
             loaded: direction,
             clicked: undefined,
           })
-        }
-      }
-
-      xhr.open(
-        'GET',
-        `http://backend.hersen.net/json/current?direction=${direction}`,
-        true
-      )
-      xhr.send()
+        )
     }
   }
 
