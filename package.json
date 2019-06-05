@@ -31,6 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "cd src/lambda/stations && npm install && cd ../current && npm install",
     "deploy": "rsync -avz build/ ${DEPLOY_DESTINATION}/text-react-app/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
