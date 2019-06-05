@@ -14,7 +14,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('/json/pendel')
+    fetch('/.netlify/functions/stations')
       .then(response => response.json())
       .then(json =>
         this.setState({
@@ -30,7 +30,7 @@ class App extends Component {
         loaded: undefined,
       })
 
-      fetch(`/json/current?direction=${direction}`)
+      fetch(`/.netlify/functions/current?direction=${direction}`)
         .then(response => response.json())
         .then(json =>
           this.setState({
